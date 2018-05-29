@@ -35,3 +35,46 @@ one(2); // { a: 2, b: 4, c: 12 }
 
 // NOTE: Bubbles of the Scopes are strictly nested. The 'two' is a subset of 'one'. And 'one' is a subset of global.
 // NOTE 2: Scope-lookups (searching for identifiers) stops once it finds the first match.
+
+/* Chapter 3: Function vs Block Scope */
+// Scope From Functions: All variables belong to the function, can be used and reused throughout the entire
+// function (even accessible at nested scopes).∫∫
+function displayInfo(name) {
+  let age = 25;
+  let gender = "M";
+
+  function displayName() {
+    return name;
+  }
+
+}
+// console.log(age, gender, name); // All three fail
+// displayName(); // ReferenceError: displayName is not defined
+
+// Hiding in Plain Scope: "hide" variables and functions by enclosing them in the scope of a function
+function converter(number) {
+  function multiplyNumber(number) {
+    return number * 2;
+  }
+
+  let b = 5 + multiplyNumber(number);
+  return b;
+}
+
+console.log(converter(2));  // 9
+// console.log(number, b);        // ReferenceError: number is not defined
+// console.log(multiplyNumber(2)); // ReferenceError: multiplyNumber is not defined
+
+// number, multiplyNumber, b are not accesible by any outside influence. 
+// Note: This design keeps details private between functions. Good Software.
+// [Principle of Least Privilege]: you should expose only what is minimally necessary, and "hide" everything else.
+
+// Call automatically a Function (IFFE)
+let x = 2;
+
+(function executeThisNow() {
+  let x = 3;
+  console.log("x value from the executeThisNow function: ", x);
+}());
+
+console.log("x value from the global scope function: ", x);

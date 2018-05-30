@@ -112,3 +112,26 @@ setTimeout(function timeOutHandler() {
   // console.log('Outside the if statement block:' {PI}); // ReferenceError: PI is not defined, since it has been declared with 'const' keyword
 
 })();
+
+/*** Chapter 4: Hoisting ***/
+// Declaration vs Assignment: The declaration, is processed during the compilation phase. The assignament is processed during the execution phase.
+// console.log(myName); ReferenceError: myName is not defined
+let myName = "Hector";  
+
+// Declarations are "moved" from the flow of the code to the top of the code, this is what is called "Hoisting".
+
+// Function Declarations vs Function Expressions: 
+
+// Function declarations are hoisted!
+hoistedFunctionInc();
+function hoistedFunctionInc() {
+  console.log("This should work, right?");
+}
+
+// Function expressions are not hoisted!
+// myNotHoistedFunction(); ReferenceError: myNotHoistedFunction is not defined
+let myNotHoistedFunction = function() {
+  console.log("This will not work, right?");
+}
+
+// NOTE: Functions declarations are hosited first, then variables declarations.

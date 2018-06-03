@@ -1,4 +1,4 @@
-// this: introduction
+/*** Chapter 1: this: introduction ***/
 function identify() {
     console.log("identify:", this);  // identify: { name: 'Hector' }, identify: { name: 'Arwel' }
     return this.name.toUpperCase();

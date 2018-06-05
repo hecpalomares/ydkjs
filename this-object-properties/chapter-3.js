@@ -90,14 +90,14 @@ let constant_me = {};
 
 Object.defineProperty(constant_me, "ssn", {
     value: "025-44-4457",
-	writable: false,
+    writable: false,
     configurable: false,
     enumerable: true
 });
 
 constant_me.name = "Hector";
 
-console.log(constant_me);   // { ssn: '025-44-4457', name: 'Hector' }
+console.log(constant_me); // { ssn: '025-44-4457', name: 'Hector' }
 
 // Prevent Extensions, prevent an object to be added more properties
 let product = {
@@ -109,7 +109,77 @@ Object.preventExtensions(product);
 
 product.size = "large";
 
-console.log(product);   // { name: 'product-name', price: 0 }
+console.log(product); // { name: 'product-name', price: 0 }
 
 // Seal: Object.preventExtension(...) + configurable: false to all existing properties.
 // Freeze: Object.seal(...) + writable: false to all existing properties. (Highest level of immutability)
+
+// Getter & Setters
+let employee = {
+    get salary() {
+        return 10000;
+    },
+};
+
+Object.defineProperty(employee, "salaryAfterPromotion", {
+    get: function () {
+        return this.salary * 1.5;
+    },
+    enumerable: true
+});
+
+console.log(employee.salary); // 10000
+console.log(employee.salaryAfterPromotion); // 15000
+
+employee.salary = 20000;
+console.log(employee.salary); // 10000, the custom getter is always returning 10000 (line 120)
+
+let footballPlayer = {
+    _wins_: 0,
+    get wins() {
+        return this._wins_;
+    },
+    // etter increase by the valued passed to the footballPlayer
+    set wins(value) {
+        this._wins_ = this._wins_ + value;
+    }
+}
+
+console.log(footballPlayer._wins_); // 0
+footballPlayer.wins = 1;
+footballPlayer.wins = 2;
+footballPlayer.wins = 2;
+console.log(footballPlayer._wins_); // 5
+
+// Existence: does an object hold 'x' property?
+// object.hasOwnProperty
+console.log(footballPlayer.hasOwnProperty("_wins_")); // true
+console.log(footballPlayer.hasOwnProperty("_losses_")); // false
+
+// Enumeration: iterate over the list of enumerable properties
+let objectE = {};
+
+Object.defineProperty(objectE, "a", {
+    enumerable: true,
+    value: 2
+});
+
+Object.defineProperty(objectE, "b", {
+    enumerable: false,
+    value: 3
+});
+
+Object.defineProperty(objectE, "c", {
+    enumerable: true,
+    value: 4
+});
+
+console.log(objectE.a);   // { a: 2 }
+console.log(objectE.b);   // { b: 3 } it exists, but it doesn't show on the enumerables of the objectE
+console.log(objectE);     // { a: 2 }, { c: 4 }
+
+// Iteration: iterate over the list of enumerable properties
+for(let key in objectE) {
+    console.log(key); // a, c
+    console.log(objectE[key]);  // 2, 4
+}

@@ -29,3 +29,36 @@ console.log(myObjectA.a);   // 2
 console.log(myObjectB.a);   // 3
 
 console.log(myObjectB.hasOwnProperty("a"));  // true
+
+// 'Class'
+// Delegation: link between two objects
+function doSomething() {
+    let b = 2;
+    let c = 3;
+}
+let myObjectC = new doSomething();
+console.log(Object.getPrototypeOf(myObjectC));  // doSomething {}
+
+// Creates a link between two objects (doSomething function and myObjectC) are both objects
+// myObjectC can delegate the property/function access to another object (doSomething() function)
+// JavaScript do NOT copy properties, it creates a link (called prototype) between the objects
+
+// Mechanics to simulate 'class' in JavaScript
+function Person(name, age) {
+    this.name = name;
+    this.age = age;
+}
+
+Person.prototype.getPublicInformation = function() {
+    return `Hello my name is ${this.name} and my age is ${this.age}`;
+}
+
+let alice = new Person("Alice", 32);
+let bob = new Person("Bob", 24);
+
+console.log(alice.getPublicInformation());  // Hello my name is Alice and my age is 32
+console.log(bob.getPublicInformation());    // Hello my name is Bob and my age is 24
+
+// 1. this.name = name adds the .name property to each object, and so on for every property
+// 2. Person.prototype.getPublicInformation, adds a property function to the Person Prototype that every object share
+// 2.1 Each object created via 'new' keyword has its [[Prototype]] linked to the Person [[Prototype]] so it can access the properties declared in their 'parent' chain link.

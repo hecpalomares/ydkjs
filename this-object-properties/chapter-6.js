@@ -95,3 +95,58 @@ console.log(itesmX.calculateCost());
 console.log(jfkX.calculateCost());
 console.log(itesmX.showType());
 console.log(jfkX.showType());
+
+// Classes vs. Objects
+// ES6 Class Sugar
+class Widget {
+    constructor(width = 50, height = 50) {
+        this.width = width;
+        this.height = height;
+    }
+}
+
+class Button extends Widget {
+    constructor(width, height, label = "Button") {
+        super(width, height);
+        this.label = label;
+    }
+    onclick() {
+        console.log("Button: " + this.label + " was clicked.");
+    }
+}
+
+let btn1 = new Button(120, 40, "Submit");
+let btn2 = new Button(200, 35, "Continue");
+btn1.onclick();
+
+// Delegated Objects
+let WidgetX = {
+    init: function(width = 50, height= 50) {
+        this.width = width;
+        this.height = height;
+    }
+};
+
+let ButtonX = Object.create(WidgetX);
+
+ButtonX.setup = function(width, height, label = "ButtonX") {
+    // delegated call
+    this.init(width, call);
+    this.label = label;
+};
+
+ButtonX.onclick = function() {
+    console.log("ButtonX" + this.label + "was clicked");
+};
+
+let btn1X = new Button(120, 40, "SubmitX");
+let btn2X = new Button(200, 35, "ContinueX");
+btn1X.onclick();
+
+// Widget is just an object and is sort of a utility collection that any specific type of widget might want to delegate to. 
+// Button is also just a stand-alone object (with a delegation link to Widget).
+
+// Summary: 
+// 1. Behavior delegations suggests objects as peer of each other, delegate among themeselves. JS [[Prototype]] is a delegation mechanism by nature. 
+// 2. Simply syntax and the code architecure design.
+// 3. OLOO (objects linked to other objects) is a code style that creates and relates objects directly without abstraction of classes. OLOO implements naturally the [[Prototype]] behavior delegation.

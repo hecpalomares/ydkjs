@@ -1,4 +1,4 @@
-/** Natives: Object wrappers around primitve values. JS automatically wraps the primitve value around the value in order to use the methods. **/
+/** Chapter 3: Natives. Object wrappers around primitve values. JS automatically wraps the primitve value around the value in order to use the methods. **/
 let myName = "Hector";
 console.log(myName.length);
 console.log(myName.toUpperCase());
